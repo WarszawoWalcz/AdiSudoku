@@ -14,6 +14,7 @@ public class App {
 
         if (game1.solve() && game1.validSolution()){
             System.out.println("Solved!");
+            System.out.println('g');
         }
         else{
             System.out.println("Could not solve this sudoku :(");
