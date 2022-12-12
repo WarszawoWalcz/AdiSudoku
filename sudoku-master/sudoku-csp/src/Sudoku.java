@@ -73,12 +73,6 @@ public class Sudoku {
     private static void addNeighbours(Field[][] grid) {
         // TODO: for each field, add its neighbours
 
-//      for (Field[] row: grid) {
-//          for (Field column: row) {
-//              neighbours.add(getRow(row))
-//          }
-//      }
-
         for (int row = 0; row < grid.length; row++) {
             for (int column = 0; column < grid[0].length; column++) {
                 setRowNeighbours(grid, row, column);
@@ -90,8 +84,7 @@ public class Sudoku {
         List<Field> neighbours = new ArrayList<>();
 
         for (int i = 0; i < grid[row].length; i++) {
-            if (i != column)
-                neighbours.add(grid[row][i]);
+            if (i != column) neighbours.add(grid[row][i]);
         }
 
         return setColumnNeighbours(grid, row, column, neighbours);
@@ -99,25 +92,74 @@ public class Sudoku {
 
     private static boolean setColumnNeighbours(Field[][] grid, int row, int column, List<Field> neighbours) {
         for (int i = 0; i < grid.length; i++) {
-            if (i != row)
-                neighbours.add(grid[i][column]);
+            if (i != row) neighbours.add(grid[i][column]);
         }
 
         return setLocalSquareNeighbours(grid, row, column, neighbours);
     }
 
+    public static int index_position = 0;
     private static boolean setLocalSquareNeighbours(Field[][] grid, int row, int column, List<Field> neighbours) {
-        // I could create a subarray of small square and overwrite it
-        if (row < 2) {
-            if (column < 2) {
-                List<Field> squareFields = new ArrayList<>(9);
-//                squareFields = getSubgridFields(+)
+        String subgrid = "";
+        index_position++;
+        if (row < 3) {
+            if (column < 3) {
+                subgrid = "Subgrid = 1";
+                getSubgridFields(0, grid, neighbours, 0, subgrid);
+            }
+            else if (column < 6) {
+                subgrid = "Subgrid = 2";
+                getSubgridFields(3, grid, neighbours, 0, subgrid);
+            }
+            else if (column < 9) {
+                subgrid = "Subgrid = 3";
+                getSubgridFields(6, grid, neighbours, 0, subgrid);
             }
         }
-
+        else if (row < 6) {
+            if (column < 3) {
+                subgrid = "Subgrid = 4";
+                getSubgridFields(0, grid, neighbours, 3, subgrid);
+            }
+            else if (column < 6) {
+                subgrid = "Subgrid = 5";
+                getSubgridFields(3, grid, neighbours, 3, subgrid);
+            }
+            else if (column < 9) {
+                subgrid = "Subgrid = 6";
+                getSubgridFields(6, grid, neighbours, 3, subgrid);
+            }
+        }
+        else if (row < 9) {
+            if (column < 3) {
+                subgrid = "Subgrid = 7";
+                getSubgridFields(0, grid, neighbours, 6, subgrid);
+            }
+            else if (column < 6) {
+                subgrid = "Subgrid = 8";
+                getSubgridFields(3, grid, neighbours, 6, subgrid);
+            }
+            else if (column < 9) {
+                subgrid = "Subgrid = 9";
+                getSubgridFields(6, grid, neighbours,  6, subgrid);
+            }
+        }
+        
         grid[row][column].setNeighbours(neighbours);
+        System.out.println("Variable " + index_position + ": " + grid[row][column].getNeighbours());
 
         return true;
+    }
+
+    private static void getSubgridFields(int columnSquare, Field[][] grid, List<Field> neighbours, int rowSquare, String subgrid) {
+        int startRow = rowSquare, startCol = columnSquare, endRow = rowSquare + 2, endCol = columnSquare + 2;
+
+        for (;startRow <= endRow; startRow++) {
+            for(;startCol <= endCol; startCol++) {
+                if (rowSquare != startRow || columnSquare != startCol) neighbours.add(grid[startRow][startCol]);
+            }
+            startCol = columnSquare;
+        }
     }
 
     /**
