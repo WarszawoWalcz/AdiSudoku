@@ -71,12 +71,10 @@ public class Sudoku {
      * @param grid
      */
     private static void addNeighbours(Field[][] grid) {
-        // TODO: for each field, add its neighbours
-
         for (int row = 0; row < grid.length; row++) {
             for (int column = 0; column < grid[0].length; column++) {
                 setRowNeighbours(grid, row, column);
-            }
+           }
         }
     }
 

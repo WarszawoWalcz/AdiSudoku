@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Game {
   private Sudoku sudoku;
 
@@ -15,8 +17,16 @@ public class Game {
    * @return true if the constraints can be satisfied, else false
    */
   public boolean solve() {
-    // TODO: implement AC-3
-    return true;
+    AC3 solver = new AC3(sudoku.getBoard());
+
+    if(solver.run()) {
+      // The puzzle is solved successfully
+      return true;
+    }
+    else {
+      // The puzzle is impossible to solve
+      return false;
+    }
   }
 
   /**
@@ -26,6 +36,13 @@ public class Game {
    */
   public boolean validSolution() {
     // TODO: implement validSolution function
+    for (int row = 0; row < sudoku.getBoard().length; row++) {
+      for (int column = 0; column < sudoku.getBoard()[row].length; column++) {
+        System.out.print(sudoku.getBoard()[row][column].getValue() + " ");
+      }
+      System.out.println();
+    }
     return true;
   }
+
 }

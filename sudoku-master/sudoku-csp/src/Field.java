@@ -88,6 +88,10 @@ public class Field {
     return b;
   }
 
+  public void setDomain(List<Integer> revisedDomain) {
+    this.domain = revisedDomain;
+  }
+
   /*
    * ================
    *  MISC FUNCTIONS
